@@ -204,10 +204,10 @@ namespace DevDefined.OAuth.Consumer
 
 	  public string GetUserAuthorizationUrlForToken(IToken token)
 		{
-			return GetUserAuthorizationUrlForToken(token, null);
+			return GetUserAuthorizationUrlForToken(null, token);
 		}
 
-		public string GetUserAuthorizationUrlForToken(IToken token, string callbackUrl)
+		public string GetUserAuthorizationUrlForToken( string consumerKey, IToken token)
 		{
 			var builder = new UriBuilder(UserAuthorizeUri);
 
@@ -219,17 +219,13 @@ namespace DevDefined.OAuth.Consumer
 			}
 
 			if (_queryParameters != null) collection.Add(_queryParameters);
-
+            
+            collection[Parameters.OAuth_Consumer_Key] = consumerKey;
 			collection[Parameters.OAuth_Token] = token.Token;
-
-			if (!string.IsNullOrEmpty(callbackUrl))
-			{
-				collection[Parameters.OAuth_Callback] = callbackUrl;
-			}
 
 			builder.Query = "";
 
-			return builder.Uri + "?" + UriUtility.FormatQueryString(collection);
+            return builder.Uri + "?key=" + HttpUtility.UrlEncode(consumerKey) + "&token=" + HttpUtility.UrlEncode(token.Token);
 		}
 
 		public IOAuthSession WithFormParameters(IDictionary dictionary)
@@ -333,6 +329,7 @@ namespace DevDefined.OAuth.Consumer
 			       	};
 		}
 
+       
 		static bool WasCallbackConfimed(NameValueCollection parameters)
 		{
 			string value = ParseResponseParameter(parameters, Parameters.OAuth_Callback_Confirmed);
