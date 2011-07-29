@@ -62,6 +62,7 @@ namespace DevDefined.OAuth.Consumer
 		public AsymmetricAlgorithm Key { get; set; }
 		public bool UseHeaderForOAuthParameters { get; set; }
 		public string UserAgent { get; set; }
+        public string CallBack { get; set; }
 
 		public void SignContext(IOAuthContext context)
 		{
@@ -74,6 +75,7 @@ namespace DevDefined.OAuth.Consumer
 			context.SignatureMethod = SignatureMethod;
 			context.Timestamp = Clock.EpochString;
 			context.Version = "1.0";
+            context.CallbackUrl = CallBack;
 
 			context.Nonce = NonceGenerator.GenerateNonce(context);
 
