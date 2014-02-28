@@ -1,3 +1,9 @@
+27th February 2014
+----------------
+Performed Fork of jejernics form
+Fixed transposed arguments for GetUserAuthorizationUrlForToken in Oauth.Consumer.OAuthSession.cs
+Put token as first argument, swapping with the string consumerkey which is the second argument, lines 208 & 212
+
 6th October 2010
 ----------------
 
