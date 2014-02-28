@@ -204,10 +204,12 @@ namespace DevDefined.OAuth.Consumer
 
 	  public string GetUserAuthorizationUrlForToken(IToken token)
 		{
-			return GetUserAuthorizationUrlForToken(null, token);
+            // Feb-27-2014 Rich Bianco - Fixed the transposed arguments, token should be first
+			return GetUserAuthorizationUrlForToken(token, null);
 		}
 
-		public string GetUserAuthorizationUrlForToken( string consumerKey, IToken token)
+        // Feb-27-2014 Rich Bianco - Fixed the transposed arguments, token should be first
+		public string GetUserAuthorizationUrlForToken( IToken token, string consumerKey)
 		{
 			var builder = new UriBuilder(UserAuthorizeUri);
 
